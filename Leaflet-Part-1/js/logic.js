@@ -27,7 +27,7 @@ function createFeatures(earthquakeData) {
     // Define a function that we want to run once for each feature in the features array.
     // Give each feature a popup that describes the place and time of the earthquake.
     function onEachFeature(feature, layer) {
-            layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
     }
 
     // Create a GeoJSON layer that contains the features array on the earthquakeData object.
@@ -36,7 +36,7 @@ function createFeatures(earthquakeData) {
         onEachFeature: onEachFeature,
 
         // Point to the layer used to alter the markers
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
 
             // Determine the style of markers used on properties
             let markers = {
@@ -58,25 +58,25 @@ function createFeatures(earthquakeData) {
 function createMap(earthquakes) {
 
     // Create tile layers
-    let normalScale = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    let grayScale = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         tileSize: 512,
         maxZoom: 18,
-        zoomOffset: -1, 
+        zoomOffset: -1,
     });
 
-    // Create myMap, giving it the normalScale map and earthquakes layers to display on load.
+    // Create myMap, giving it the grayScale map and earthquakes layers to display on load.
     let myMap = L.map("map", {
         center: [37.09, -95.71],
-        zoom: 4, 
-        layers: [normalScale, earthquakes]
+        zoom: 4,
+        layers: [grayScale, earthquakes]
     });
 
     // Add legend
-    let legend = L.control({position: "bottomright"});
-    legend.onAdd = function() {
+    let legend = L.control({ position: "bottomright" });
+    legend.onAdd = function () {
         let div = L.DomUtil.create("div", "info legend");
-        let depthRanges = ["-10-10", "10-30", "30-50", "50-70", "70-90", "90+"];
+        let depthRanges = ["0-10", "10-30", "30-50", "50-70", "70-90", "90+"];
         div.innerHTML += "<h3 style='text-align: center'>Depth</h3>";
 
         for (let i = 0; i < depthRanges.length; i++) {
